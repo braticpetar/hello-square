@@ -1,34 +1,3 @@
-<!-- Copyright 2020, Cem Yuksel, University of Utah -->
-<html>
-<head>
-<title>CS4600 - WebGL Example: Square</title>
-    
-<script id="vertexShader" type="x-shader/x-vertex">
-attribute vec3 pos;
-attribute vec4 clr;
-
-uniform mat4 trans;
-varying vec4 vcolor;
-
-void main()
-{
-  gl_Position = trans * vec4(pos,1);
-  vcolor = clr;
-}
-</script>
-
-<script id="fragmentShader" type="x-shader/x-fragment">
-precision mediump float;
-
-varying vec4 vcolor;
-
-void main()
-{
-  gl_FragColor = vcolor;
-}
-</script>
-
-<script type="text/javascript">
 window.onload = function()
 {
   // Initialize WebGL
@@ -100,10 +69,8 @@ window.onload = function()
   // An application can have multiple shader programs and bind a different
   // shader program for rendering different objects in a scene.
 
-  const vs_source = document.getElementById('vertexShader').text;
-
   const vs = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vs, vs_source);
+  gl.shaderSource(vs, vertexShaderSource);
   gl.compileShader(vs);
 
   if (! gl.getShaderParameter(vs, gl.COMPILE_STATUS) ) {
@@ -111,10 +78,8 @@ window.onload = function()
     gl.deleteShader(vs);
   }
 
-  const fs_source = document.getElementById('fragmentShader').text;
-
   const fs = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fs, fs_source);
+  gl.shaderSource(fs, fragmentShaderSource);
   gl.compileShader(fs);
 
   if ( ! gl.getShaderParameter(fs, gl.COMPILE_STATUS) ) {
@@ -174,19 +139,5 @@ window.onload = function()
   gl.useProgram(prog);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
-</script>
 
-<style>
-#mycanvas {
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  display: block;
-  border: 1px solid black;
-}
-</style>
-</head>
-<body>
-<canvas id="mycanvas"></canvas>
-</body>
-</html>
+window.onload = main;
